@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FeaturedWork from './components/FeaturedWork';
 
+import Footer from './components/Footer';
+
 function App() {
   return (
     <LenisScroll>
@@ -13,11 +15,7 @@ function App() {
         <main>
           <Hero />
           <FeaturedWork />
-          <section className="h-[50vh] flex items-center justify-center bg-[#050505] border-t border-zinc-900 relative overflow-hidden">
-            <h2 className="font-heading font-bold text-5xl md:text-8xl text-zinc-900 uppercase tracking-tighter text-center max-w-4xl opacity-50">
-              IMPACT &gt; CONTENT
-            </h2>
-          </section>
+          <Footer />
         </main>
       </div>
     </LenisScroll>
