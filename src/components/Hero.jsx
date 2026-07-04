@@ -2,6 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
 
+import scribbleCross from '../assets/scribble_cross.png';
+import scribblePointer from '../assets/scribble_pointer.png';
+import scribbleSquareCorner from '../assets/scribble_square_corner.png';
+import scribbleUnderline from '../assets/scribble_underline.png';
+import scribbleCircle from '../assets/scribble_circle.png';
+
 export default function Hero() {
   const containerRef = useRef(null);
 
@@ -10,6 +16,7 @@ export default function Hero() {
       gsap.set('.hero-line-inner', { yPercent: 110 });
       gsap.set('.hero-marker', { opacity: 0, scale: 0.85, rotation: -3 });
       gsap.set('.hero-bottom', { opacity: 0, y: 30 });
+      gsap.set('.hero-scribble', { opacity: 0, scale: 0.85 });
 
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
@@ -26,6 +33,13 @@ export default function Hero() {
         duration: 1,
         ease: 'back.out(1.4)',
       }, '-=0.7')
+      .to('.hero-scribble', {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        stagger: 0.08,
+        ease: 'power2.out',
+      }, '-=0.6')
       .to('.hero-bottom', {
         opacity: 1,
         y: 0,
@@ -47,29 +61,47 @@ export default function Hero() {
       }}
     >
       {/* Dark vignette overlay */}
-      <div className="absolute inset-0 pointer-events-none" style={{
+      <div className="absolute inset-0 pointer-events-none z-0" style={{
         background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%)',
       }} />
 
+      {/* ========== PNG BACKGROUND SCRIBBLES ========== */}
+
+      {/* Square corner bracket — top right, rotated 180 so bracket opens toward center */}
+      <img
+        src={scribbleSquareCorner}
+        alt=""
+        className="hero-scribble absolute top-[5%] right-[3%] w-[28vw] md:w-[22vw] opacity-0 rotate-180 mix-blend-screen pointer-events-none z-[1]"
+        style={{ filter: 'brightness(1.4)' }}
+      />
+
+      {/* Square corner bracket — bottom left, natural orientation */}
+      <img
+        src={scribbleSquareCorner}
+        alt=""
+        className="hero-scribble absolute bottom-[8%] left-[2%] w-[24vw] md:w-[18vw] opacity-0 mix-blend-screen pointer-events-none z-[1]"
+        style={{ filter: 'brightness(1.2)', opacity: 0 }}
+      />
+
+      {/* Circle scribble — large, behind the typography, slightly off-center left */}
+      <img
+        src={scribbleCircle}
+        alt=""
+        className="hero-scribble absolute top-[18%] left-[8%] w-[45vw] md:w-[32vw] opacity-0 rotate-12 mix-blend-screen pointer-events-none z-[1]"
+        style={{ filter: 'brightness(1.3)' }}
+      />
+
+      {/* Cross mark — top left area, floating accent */}
+      <img
+        src={scribbleCross}
+        alt=""
+        className="hero-scribble absolute top-[12%] right-[28%] w-[14vw] md:w-[8vw] opacity-0 -rotate-12 mix-blend-screen pointer-events-none z-[1]"
+        style={{ filter: 'brightness(1.5)' }}
+      />
+
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
 
-        {/* Background Scribbles for Hero */}
-        <div className="absolute top-[10%] left-[5%] w-[30vw] h-[30vw] pointer-events-none opacity-[0.03] mix-blend-screen rotate-12">
-          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full stroke-white stroke-[0.5]">
-             <path d="M20,20 Q100,-20 180,20 T180,180 T20,180 T20,20" />
-             <path d="M0,0 L200,200 M200,0 L0,200 M100,0 L100,200 M0,100 L200,100" />
-             <circle cx="100" cy="100" r="80" />
-             <circle cx="100" cy="100" r="60" />
-          </svg>
-        </div>
-        
-        <div className="absolute top-[40%] right-[5%] w-[20vw] h-[20vw] pointer-events-none opacity-[0.05] mix-blend-screen -rotate-12">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full stroke-white stroke-[1]">
-             <path d="M10,10 L90,90 M20,10 L90,80 M10,20 L80,90 M30,10 L90,70 M10,30 L70,90" />
-          </svg>
-        </div>
-
-        {/* Typography Group - NO overflow-hidden on wrapper */}
+        {/* Typography Group */}
         <div className="relative w-full flex flex-col items-center mt-8 md:mt-16">
 
           {/* Line 1: IDEAS THAT */}
@@ -79,10 +111,15 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Line 2: INSPIRE with decorative marks */}
+          {/* Line 2: INSPIRE with scribble cross instead of unicode ✕ */}
           <div className="w-full overflow-hidden flex justify-center">
             <div className="hero-line-inner font-heading font-bold uppercase leading-[0.88] text-calypso-red text-[14vw] sm:text-[12vw] md:text-[10.5vw] lg:text-[9vw] tracking-tighter flex items-center gap-[2vw]">
-              <span className="text-offwhite/60 text-[6vw] font-light rotate-12 select-none">✕</span>
+              <img
+                src={scribbleCross}
+                alt=""
+                className="w-[12vw] md:w-[7vw] -rotate-[8deg] opacity-70 mix-blend-screen inline-block pointer-events-none"
+                style={{ filter: 'brightness(1.8)' }}
+              />
               INSPIRE
               <span className="text-offwhite/60 text-[6vw] font-light -rotate-12 select-none">!!</span>
             </div>
@@ -102,7 +139,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Marker Scribble Overlay — OUTSIDE overflow-hidden containers, positioned over the whole group */}
+          {/* Marker Scribble Overlay — positioned over the whole group */}
           <div className="hero-marker absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
             <div className="relative" style={{ marginTop: '12%' }}>
               <h2 className="font-marker text-offwhite text-[7vw] sm:text-[6vw] md:text-[5vw] lg:text-[4.5vw] whitespace-nowrap transform -rotate-[3deg] leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
@@ -111,25 +148,38 @@ export default function Hero() {
               <h2 className="font-marker text-offwhite text-[7vw] sm:text-[6vw] md:text-[5vw] lg:text-[4.5vw] whitespace-nowrap transform rotate-[1.5deg] ml-[8%] leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
                 NOT JUST CONTENT
               </h2>
-              {/* Red scribble underline */}
-              <svg className="w-[70%] h-auto ml-[20%] mt-3 overflow-visible" viewBox="0 0 200 20" fill="none">
-                <path d="M5,15 Q30,2 60,12 T120,8 T195,14" stroke="#8B0000" strokeWidth="3" strokeLinecap="round" />
-                <path d="M10,18 Q50,6 100,14 T190,10" stroke="#8B0000" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-              </svg>
+              {/* PNG underline replacing SVG */}
+              <div className="w-[65%] ml-[18%] mt-1 overflow-visible -rotate-[2deg]">
+                <img
+                  src={scribbleUnderline}
+                  alt=""
+                  className="w-full h-auto mix-blend-screen opacity-80 drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)]"
+                  style={{ filter: 'brightness(2)' }}
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Details */}
-        <div className="w-full mt-28 md:mt-36 flex justify-between items-end pb-8">
-          <div className="hero-bottom flex items-center gap-3 font-sans text-xs md:text-sm tracking-widest text-gray-500 group cursor-pointer">
+        <div className="w-full mt-28 md:mt-36 flex justify-between items-end pb-8 relative">
+
+          {/* Pointer arrow near SCROLL TO EXPLORE */}
+          <img
+            src={scribblePointer}
+            alt=""
+            className="hero-scribble absolute left-20 md:left-32 -top-4 w-[12vw] md:w-[6vw] rotate-[20deg] opacity-0 mix-blend-screen pointer-events-none z-10"
+            style={{ filter: 'brightness(1.6)' }}
+          />
+
+          <div className="hero-bottom flex items-center gap-3 font-sans text-xs md:text-sm tracking-widest text-gray-500 group cursor-pointer relative z-20">
             <div className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center group-hover:border-offwhite group-hover:text-offwhite transition-colors duration-300">
               <ArrowDown size={16} />
             </div>
             <span className="group-hover:text-offwhite transition-colors duration-300">SCROLL TO EXPLORE</span>
           </div>
 
-          <div className="hero-bottom text-right font-sans text-[10px] md:text-xs max-w-[260px] text-gray-500 leading-relaxed tracking-wider">
+          <div className="hero-bottom text-right font-sans text-[10px] md:text-xs max-w-[260px] text-gray-500 leading-relaxed tracking-wider z-20">
             A CREATIVE STUDIO<br />
             BUILDING BOLD DIGITAL<br />
             EXPERIENCES AND<br />

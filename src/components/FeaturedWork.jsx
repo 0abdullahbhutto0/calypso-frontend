@@ -2,6 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
+import scribbleCross from '../assets/scribble_cross.png';
+import scribblePointer from '../assets/scribble_pointer.png';
+import scribbleSquareCorner from '../assets/scribble_square_corner.png';
+import scribbleCircle from '../assets/scribble_circle.png';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
@@ -175,15 +180,31 @@ export default function FeaturedWork() {
     <div ref={sectionRef} id="work">
       {/* --- Grid Preview Section --- */}
       <section className="relative py-28 md:py-40 px-6 md:px-12 bg-void">
-        <div className="max-w-[1600px] mx-auto">
-          {/* Section Title */}
-          <div className="mb-16 md:mb-24 overflow-hidden">
+        <div className="max-w-[1600px] mx-auto relative">
+
+          {/* Section Title with scribble cross accent */}
+          <div className="mb-16 md:mb-24 overflow-visible relative">
             <h2
               ref={titleRef}
-              className="font-heading font-black text-5xl md:text-7xl lg:text-[8rem] text-calypso-red uppercase leading-[0.8] tracking-tighter"
+              className="font-heading font-black text-5xl md:text-7xl lg:text-[8rem] text-calypso-red uppercase leading-[0.8] tracking-tighter inline-block relative"
             >
               FEATURED<br />WORK
+              {/* Cross scribble next to title */}
+              <img
+                src={scribbleCross}
+                alt=""
+                className="absolute -right-12 md:-right-28 -top-4 md:-top-10 w-[18vw] md:w-[8vw] rotate-[12deg] opacity-60 mix-blend-screen pointer-events-none"
+                style={{ filter: 'brightness(1.8)' }}
+              />
             </h2>
+
+            {/* Circle scribble behind the title area */}
+            <img
+              src={scribbleCircle}
+              alt=""
+              className="absolute -top-20 md:-top-32 left-[30%] w-[40vw] md:w-[22vw] opacity-[0.07] mix-blend-screen pointer-events-none -rotate-6"
+              style={{ filter: 'brightness(1.4)' }}
+            />
           </div>
 
           {/* Staggered Card Grid */}
@@ -191,7 +212,7 @@ export default function FeaturedWork() {
             {projects.slice(0, 3).map((project, idx) => (
               <div
                 key={project.id}
-                className={`work-card group relative overflow-hidden cursor-pointer bg-zinc-950 ${
+                className={`work-card group relative overflow-visible cursor-pointer bg-zinc-950 ${
                   idx === 1 ? 'md:mt-24' : ''
                 } ${idx === 2 ? 'md:mt-48' : ''}`}
                 style={{ aspectRatio: '3/4' }}
@@ -230,6 +251,35 @@ export default function FeaturedWork() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </div>
+
+                {/* === Card-specific scribble decorations === */}
+                {/* Nike (card 0): circle scribble wrapping around the card */}
+                {idx === 0 && (
+                  <img
+                    src={scribbleCircle}
+                    alt=""
+                    className="absolute -bottom-10 -right-10 w-[180px] md:w-[220px] opacity-40 mix-blend-screen pointer-events-none z-30 rotate-[25deg]"
+                    style={{ filter: 'brightness(1.5)' }}
+                  />
+                )}
+                {/* Spotify (card 1): pointer arrow pointing at the card */}
+                {idx === 1 && (
+                  <img
+                    src={scribblePointer}
+                    alt=""
+                    className="absolute -top-16 left-4 w-[100px] md:w-[130px] -rotate-[10deg] opacity-50 mix-blend-screen pointer-events-none z-30"
+                    style={{ filter: 'brightness(1.6)' }}
+                  />
+                )}
+                {/* Tesla (card 2): square corner bracket framing the top-right */}
+                {idx === 2 && (
+                  <img
+                    src={scribbleSquareCorner}
+                    alt=""
+                    className="absolute -top-6 -right-6 w-[120px] md:w-[160px] opacity-50 mix-blend-screen pointer-events-none z-30"
+                    style={{ filter: 'brightness(1.5)' }}
+                  />
+                )}
               </div>
             ))}
           </div>
