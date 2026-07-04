@@ -101,6 +101,23 @@ export default function FeaturedWork() {
             scrub: true,
           },
         });
+
+        // Parallax for scribbles (desktop only)
+        if (window.innerWidth >= 768) {
+          const scribble = card.querySelector('.work-parallax');
+          if (scribble) {
+            gsap.to(scribble, {
+              yPercent: -20,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+              },
+            });
+          }
+        }
       });
 
       // --- The main showcase: pinned full-width expansion ---
@@ -193,8 +210,8 @@ export default function FeaturedWork() {
               <img
                 src={scribbleCross}
                 alt=""
-                className="absolute -right-12 md:-right-28 -top-4 md:-top-10 w-[18vw] md:w-[8vw] rotate-[12deg] opacity-60 mix-blend-screen pointer-events-none"
-                style={{ filter: 'brightness(1.8)' }}
+                className="absolute -right-8 md:-right-16 top-4 md:top-8 w-[12vw] md:w-[5vw] rotate-[12deg] opacity-80 mix-blend-screen pointer-events-none"
+                style={{ filter: 'brightness(2)' }}
               />
             </h2>
 
@@ -202,8 +219,8 @@ export default function FeaturedWork() {
             <img
               src={scribbleCircle}
               alt=""
-              className="absolute -top-20 md:-top-32 left-[30%] w-[40vw] md:w-[22vw] opacity-[0.07] mix-blend-screen pointer-events-none -rotate-6"
-              style={{ filter: 'brightness(1.4)' }}
+              className="absolute -top-10 md:-top-20 left-[20%] w-[35vw] md:w-[15vw] opacity-30 mix-blend-screen pointer-events-none -rotate-6"
+              style={{ filter: 'brightness(2)' }}
             />
           </div>
 
@@ -253,12 +270,12 @@ export default function FeaturedWork() {
                 </div>
 
                 {/* === Card-specific scribble decorations === */}
-                {/* Nike (card 0): circle scribble wrapping around the card */}
+                {/* Nike (card 0): subdued circle scribble */}
                 {idx === 0 && (
                   <img
                     src={scribbleCircle}
                     alt=""
-                    className="absolute -bottom-10 -right-10 w-[180px] md:w-[220px] opacity-40 mix-blend-screen pointer-events-none z-30 rotate-[25deg]"
+                    className="work-parallax absolute -bottom-16 -left-16 w-[250px] md:w-[350px] opacity-30 mix-blend-soft-light pointer-events-none z-30 rotate-[25deg]"
                     style={{ filter: 'brightness(1.5)' }}
                   />
                 )}
@@ -267,8 +284,8 @@ export default function FeaturedWork() {
                   <img
                     src={scribblePointer}
                     alt=""
-                    className="absolute -top-16 left-4 w-[100px] md:w-[130px] -rotate-[10deg] opacity-50 mix-blend-screen pointer-events-none z-30"
-                    style={{ filter: 'brightness(1.6)' }}
+                    className="work-parallax absolute -top-24 md:-top-32 left-0 w-[180px] md:w-[250px] -rotate-[10deg] opacity-80 mix-blend-screen pointer-events-none z-30"
+                    style={{ filter: 'brightness(2)' }}
                   />
                 )}
                 {/* Tesla (card 2): square corner bracket framing the top-right */}
@@ -276,8 +293,8 @@ export default function FeaturedWork() {
                   <img
                     src={scribbleSquareCorner}
                     alt=""
-                    className="absolute -top-6 -right-6 w-[120px] md:w-[160px] opacity-50 mix-blend-screen pointer-events-none z-30"
-                    style={{ filter: 'brightness(1.5)' }}
+                    className="work-parallax absolute -top-[40px] -right-[40px] md:-top-[80px] md:-right-[80px] w-[140px] md:w-[200px] opacity-100 pointer-events-none z-30"
+                    style={{ filter: 'brightness(2)' }}
                   />
                 )}
               </div>

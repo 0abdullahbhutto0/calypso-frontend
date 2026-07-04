@@ -1,18 +1,44 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Menu } from 'lucide-react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+import scribbleCross from '../assets/scribble_cross.png';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (window.innerWidth >= 768) {
+        gsap.to('.nav-parallax', {
+          y: 60,
+          rotation: 15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: 'top top',
+            end: '+=2000',
+            scrub: true,
+          }
+        });
+      }
+    }, navRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference text-offwhite pointer-events-none">
+    <nav ref={navRef} className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference text-offwhite pointer-events-none">
       {/* Background Grunge/Scribbles for Header */}
-      <div className="absolute top-2 left-8 w-40 h-20 pointer-events-none opacity-40 mix-blend-screen -z-10">
-         <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-            <path d="M10,25 Q30,5 50,25 T90,25" stroke="white" strokeWidth="2" strokeLinecap="round" className="opacity-60"/>
-            <path d="M15,30 L85,20" stroke="white" strokeWidth="1" strokeLinecap="round" className="opacity-40"/>
-            <path d="M40,10 L45,40" stroke="white" strokeWidth="1" strokeLinecap="round" className="opacity-40"/>
-            <path d="M60,15 L55,35" stroke="white" strokeWidth="1.5" strokeLinecap="round" className="opacity-50"/>
-         </svg>
-      </div>
+      <img
+        src={scribbleCross}
+        alt=""
+        className="nav-parallax absolute -top-10 -left-6 md:-top-16 md:left-0 w-[240px] md:w-[320px] opacity-[0.15] mix-blend-screen pointer-events-none -z-10 -rotate-[15deg]"
+        style={{ filter: 'brightness(2)' }}
+      />
 
       <div className="text-2xl font-display font-bold tracking-tighter flex items-center gap-2 pointer-events-auto cursor-pointer relative z-10">
         <div className="w-8 h-8 rounded-full bg-calypso-red flex items-center justify-center relative overflow-hidden">

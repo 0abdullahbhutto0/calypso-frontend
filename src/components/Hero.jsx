@@ -46,6 +46,20 @@ export default function Hero() {
         duration: 0.8,
         stagger: 0.15,
       }, '-=0.4');
+
+      // Desktop only subtle parallax for scribbles
+      if (window.innerWidth >= 768) {
+        gsap.to('.hero-parallax', {
+          yPercent: -15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -65,44 +79,37 @@ export default function Hero() {
         background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%)',
       }} />
 
-      {/* ========== PNG BACKGROUND SCRIBBLES ========== */}
-
-      {/* Square corner bracket — top right, rotated 180 so bracket opens toward center */}
-      <img
-        src={scribbleSquareCorner}
-        alt=""
-        className="hero-scribble absolute top-[5%] right-[3%] w-[28vw] md:w-[22vw] opacity-0 rotate-180 mix-blend-screen pointer-events-none z-[1]"
-        style={{ filter: 'brightness(1.4)' }}
-      />
-
-      {/* Square corner bracket — bottom left, natural orientation */}
-      <img
-        src={scribbleSquareCorner}
-        alt=""
-        className="hero-scribble absolute bottom-[8%] left-[2%] w-[24vw] md:w-[18vw] opacity-0 mix-blend-screen pointer-events-none z-[1]"
-        style={{ filter: 'brightness(1.2)', opacity: 0 }}
-      />
-
-      {/* Circle scribble — large, behind the typography, slightly off-center left */}
+      {/* Circle scribble — large, centered behind the header. Subdued opacity and soft-light blend. */}
       <img
         src={scribbleCircle}
         alt=""
-        className="hero-scribble absolute top-[18%] left-[8%] w-[45vw] md:w-[32vw] opacity-0 rotate-12 mix-blend-screen pointer-events-none z-[1]"
-        style={{ filter: 'brightness(1.3)' }}
-      />
-
-      {/* Cross mark — top left area, floating accent */}
-      <img
-        src={scribbleCross}
-        alt=""
-        className="hero-scribble absolute top-[12%] right-[28%] w-[14vw] md:w-[8vw] opacity-0 -rotate-12 mix-blend-screen pointer-events-none z-[1]"
+        data-target-opacity="0.2"
+        className="hero-scribble hero-parallax absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] md:w-[50vw] opacity-0 mix-blend-soft-light pointer-events-none z-[1]"
         style={{ filter: 'brightness(1.5)' }}
       />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
 
+        {/* Cross mark — top left area, floating accent */}
+        <img
+          src={scribbleCross}
+          alt=""
+          data-target-opacity="0.7"
+          className="hero-scribble hero-parallax absolute top-[12%] right-[28%] w-[12vw] md:w-[8vw] opacity-0 -rotate-12 mix-blend-screen pointer-events-none z-[1]"
+          style={{ filter: 'brightness(1.5)' }}
+        />
+
         {/* Typography Group */}
         <div className="relative w-full flex flex-col items-center mt-8 md:mt-16">
+
+          {/* Square Corner Bracket over "THAT" */}
+          <img
+            src={scribbleSquareCorner}
+            alt=""
+            data-target-opacity="0.8"
+            className="hero-scribble hero-parallax absolute -top-[4%] md:-top-[8%] left-1/2 ml-[28vw] sm:ml-[26vw] md:ml-[24vw] lg:ml-[20vw] xl:ml-[18vw] w-[22vw] md:w-[16vw] lg:w-[14vw] opacity-0 mix-blend-screen pointer-events-none z-30"
+            style={{ filter: 'brightness(2)' }}
+          />
 
           {/* Line 1: IDEAS THAT */}
           <div className="w-full overflow-hidden">
@@ -164,12 +171,13 @@ export default function Hero() {
         {/* Bottom Details */}
         <div className="w-full mt-28 md:mt-36 flex justify-between items-end pb-8 relative">
 
-          {/* Pointer arrow near SCROLL TO EXPLORE */}
+          {/* Pointer arrow near SCROLL TO EXPLORE - Enlarged and shifted up */}
           <img
             src={scribblePointer}
             alt=""
-            className="hero-scribble absolute left-20 md:left-32 -top-4 w-[12vw] md:w-[6vw] rotate-[20deg] opacity-0 mix-blend-screen pointer-events-none z-10"
-            style={{ filter: 'brightness(1.6)' }}
+            data-target-opacity="1"
+            className="hero-scribble absolute left-6 md:left-16 bottom-28 md:bottom-32 w-[22vw] md:w-[14vw] rotate-[15deg] opacity-0 mix-blend-screen pointer-events-none z-10"
+            style={{ filter: 'brightness(2)' }}
           />
 
           <div className="hero-bottom flex items-center gap-3 font-sans text-xs md:text-sm tracking-widest text-gray-500 group cursor-pointer relative z-20">
